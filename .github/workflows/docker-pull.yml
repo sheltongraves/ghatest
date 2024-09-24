@@ -1,0 +1,26 @@
+name: Pull and Run Docker Image
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Pull Docker Image
+        run: docker pull node:16
+
+      - name: Run Docker Container
+        run: docker run -d -p 8080:8080 --name my-node-container node:16
+
+      - name: Check Running Containers
+        run: docker ps
+
+
