@@ -11,15 +11,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout your repository code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Pull a Docker image (official Node.js 16 image)
       - name: Pull Docker Image
         run: docker pull node:16
 
+      # Run the pulled Docker image as a container
       - name: Run Docker Container
         run: docker run -d -p 8080:8080 --name my-node-container node:16
 
+      # Run tests inside the container
+      - name: Run Tests Inside Docker
+        run: |
+          docker exec my-node-container npm install  # Install dependencies
+          docker exec my-node-container npm test      # Run tests
+
+      # Check that the Docker container is running
       - name: Check Running Containers
         run: docker ps
 
